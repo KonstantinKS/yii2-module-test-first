@@ -1,0 +1,30 @@
+{
+    "name": "konstantinks/yii2-module-test-first",
+    "description": "module-test-first",
+    "type": "yii2-extension",
+    "keywords": [
+        "yii2",
+        "test",
+        "module"
+    ],
+    "authors": [
+        {
+            "name": "Konstantin Karpov",
+            "email": "k-karpov@inbox.ru",
+            "homepage": "https://github.com/konstantinks/yii2-module-test-first",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "extra": {
+        "bootstrap": "KonstantinKS\\ModuleTestFirst\\Bootstrap",
+    },
+    "autoload": {
+        "psr-4": {
+            "KonstantinKS\\ModuleTestFirst\\": "src"
+        }
+    }
+}
