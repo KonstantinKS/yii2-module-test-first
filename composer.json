@@ -20,7 +20,7 @@
         "yiisoft/yii2": "~2.0.0"
     },
     "extra": {
-        "bootstrap": "KonstantinKS\\ModuleTestFirst\\Bootstrap",
+        "bootstrap": "KonstantinKS\\ModuleTestFirst\\Bootstrap"
     },
     "autoload": {
         "psr-4": {

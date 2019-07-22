@@ -48,18 +48,18 @@ class TestOneController extends Controller
 
         //$identifier = new Identifier('rsl01000003450');
 
-        //$identifier = new Identifier('rsl01008702045');
+        $identifier = new Identifier('rsl01008702045');
 
         $identifier = new Identifier('rsl01009480455');
 
         //$identifier = new Identifier('rsl01009480450');
 
+        $identifier = new Identifier('rsl01008703855');
+
         $httpService = new HttpService(
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessKey']
         );
-
-        die('444444444ddddd444444444');
 
         $resourcesService = new DocumentResourcesService($httpService);
 
@@ -74,52 +74,64 @@ class TestOneController extends Controller
 
         $resources = $render->getResourceApi()->resources($identifier);
         print_r($resources);
-        die;
+        echo '<br><br<br><hr><br><br><br>';
+        //die;
 
         $resourcesTypeSize = $render->getResourceApi()->resourcesTypeSize($identifier, 'txt');
         print_r($resourcesTypeSize);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $resourcesType = $render->getResourceApi()->resourcesType($identifier, 'txt');
         print_r($resourcesType);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentCard = $render->getContentApi()->documentCard($identifier);
         print_r($documentCard);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
-        $documentMarc = $render->getContentApi()->documentMarc($identifier, 650, 2);
+        $documentMarc = $render->getContentApi()->documentMarc($identifier, '650', '2');
         print_r($documentMarc);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentCoverWidthHeight = $render->getContentApi()->documentCoverWidthHeight($identifier, 1000, 1000);
         $documentCoverWidthHeightBase64 = base64_encode($documentCoverWidthHeight);
         echo "<img src='data:image/jpeg;base64,{$documentCoverWidthHeightBase64}' />";
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentCoverSize = $render->getContentApi()->documentCoverSize($identifier, 1000);
         $documentCoverSizeBase64 = base64_encode($documentCoverSize);
         echo "<img src='data:image/jpeg;base64,{$documentCoverSizeBase64}' />";
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentInfo = $render->getContentApi()->documentInfo($identifier);
         print_r($documentInfo);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentType = $render->getContentApi()->documentType($identifier);
         print_r($documentType);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentAccess = $render->getContentApi()->documentAccess($identifier);
         print_r($documentAccess);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentCollections = $render->getContentApi()->documentCollections($identifier);
         print_r($documentCollections);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $pagesCount = $render->getContentApi()->pagesCount($identifier);
         print_r($pagesCount);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentSearch = $render->getContentApi()->documentSearch(
@@ -137,15 +149,17 @@ class TestOneController extends Controller
             ]
         );
         print_r($documentSearch);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
-        $documentPagesGeometry = $render->getContentApi()->documentPagesGeometry($identifier, 111);
+        $documentPagesGeometry = $render->getContentApi()->documentPagesGeometry($identifier, 11);
         print_r($documentPagesGeometry);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentPages = $render->getContentApi()->documentPages(
             $identifier,
-            111,
+            11,
             'images',
             100,
             'jpeg',
@@ -154,11 +168,12 @@ class TestOneController extends Controller
         );
         $documentPagesBase64 = base64_encode($documentPages);
         echo "<img src='data:image/tiff;base64,{$documentPagesBase64}' />";
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentPagesWidthHeight = $render->getContentApi()->documentPagesWidthHeight(
             $identifier,
-            112,
+            12,
             'images',
             'width',
             1000,
@@ -168,15 +183,17 @@ class TestOneController extends Controller
         );
         $documentPagesWidthHeightBase64 = base64_encode($documentPagesWidthHeight);
         echo "<img src='data:image/tiff;base64,{$documentPagesWidthHeightBase64}' />";
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
-        $documentPagesWordList = $render->getContentApi()->documentPagesWordList($identifier, 111);
+        $documentPagesWordList = $render->getContentApi()->documentPagesWordList($identifier, 11);
         print_r($documentPagesWordList);
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentPagesSearch = $render->getContentApi()->documentPagesSearch(
             $identifier,
-            112,
+            12,
             [
                 'собор',
                 'собора',
@@ -188,6 +205,7 @@ class TestOneController extends Controller
             ]
         );
         print_r($documentPagesSearch);
+        echo '<br><br<br><hr><br><br><br>';
         $srtSearch = [];
         foreach ($documentPagesSearch as $keySearch => $search) {
             foreach ($search as $keyStr => $str) {
@@ -199,7 +217,7 @@ class TestOneController extends Controller
         }
         $documentPagesWidthHeight = $render->getContentApi()->documentPagesWidthHeight(
             $identifier,
-            112,
+            12,
             'images',
             'width',
             1000,
@@ -209,11 +227,12 @@ class TestOneController extends Controller
         );
         $documentPagesWidthHeightBase64 = base64_encode($documentPagesWidthHeight);
         echo "<img src='data:image/tiff;base64,{$documentPagesWidthHeightBase64}' />";
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentPagesSearchRender = $render->getContentApi()->documentPagesSearchRender(
             $identifier,
-            112,
+            12,
             [
                 'собористый',
                 'собора',
@@ -230,12 +249,14 @@ class TestOneController extends Controller
         );
         $documentPagesSearchRenderBase64 = base64_encode($documentPagesSearchRender);
         echo "<img src='data:image/tiff;base64,{$documentPagesSearchRenderBase64}' />";
+        echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentPageSet = $render->getContentApi()->documentPageSet($identifier, [5, '4', '9-12', 112]);
         file_put_contents(__DIR__ . '/../../files/' . time() . '.tiff', $documentPageSet);
         $documentPageSetBase64 = base64_encode($documentPageSet);
         echo "<img src='data:image/tiff;base64,{$documentPageSetBase64}' />";
+        echo '<br><br<br><hr><br><br><br>';
         die;
 
         return $this->render('render-static', [

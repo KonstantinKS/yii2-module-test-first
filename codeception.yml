@@ -1,4 +1,4 @@
-namespace: KonstantinKS\ModuleTestFirst
+namespace: KonstantinKS\ModuleTestFirst\test
 paths:
     tests: tests
     output: tests/_output
