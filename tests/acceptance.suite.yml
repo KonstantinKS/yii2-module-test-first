@@ -4,9 +4,10 @@
 # Perform tests in browser using the WebDriver or PhpBrowser.
 # If you need both WebDriver and PHPBrowser tests - create a separate suite.
 
+suite_namespace: KonstantinKS\ModuleTestFirst\test\acceptance
 actor: AcceptanceTester
 modules:
     enabled:
         - PhpBrowser:
             url: http://localhost/myapp
-        - \KonstantinKS\test1\Helper\Acceptance
+        - \KonstantinKS\ModuleTestFirst\test\Helper\Acceptance

@@ -1,6 +1,6 @@
 <?php
 
-namespace KonstantinKS\test1;
+namespace KonstantinKS\ModuleTestFirst\test;
 
 /**
  * Inherited Methods

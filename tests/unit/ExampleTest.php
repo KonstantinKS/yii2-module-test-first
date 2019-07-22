@@ -1,11 +1,13 @@
 <?php
 
-namespace KonstantinKS\test1;
+namespace KonstantinKS\ModuleTestFirst\test\unit;
+
+use KonstantinKS\ModuleTestFirst\test\UnitTester;
 
 class ExampleTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \KonstantinKS\test1\UnitTester
+     * @var UnitTester
      */
     protected $tester;
 

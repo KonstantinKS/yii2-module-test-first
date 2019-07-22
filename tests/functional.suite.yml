@@ -5,8 +5,9 @@
 # Include one of framework modules (Symfony2, Yii2, Laravel5) to use it
 # Remove this suite if you don't use frameworks
 
+#suite_namespace: KonstantinKS\ModuleTestFirst\test\functional
 actor: FunctionalTester
 modules:
     enabled:
         # add a framework module here
-        - \KonstantinKS\test1\Helper\Functional
+        - \KonstantinKS\ModuleTestFirst\test\Helper\Functional
