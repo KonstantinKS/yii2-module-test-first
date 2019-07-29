@@ -54,7 +54,7 @@ class TestOneController extends Controller
 
         //$identifier = new Identifier('rsl01009480450');
 
-        $identifier = new Identifier('rsl01008703855');
+        $identifier = new Identifier('rsl01008704417');
 
         $httpService = new HttpService(
             Yii::$app->params['render']['renderAddress'],
@@ -92,7 +92,7 @@ class TestOneController extends Controller
         echo '<br><br<br><hr><br><br><br>';
         //die;
 
-        $documentMarc = $render->getContentApi()->documentMarc($identifier, '650', '2');
+        $documentMarc = $render->getContentApi()->documentMarc($identifier, '245', 'c');
         print_r($documentMarc);
         echo '<br><br<br><hr><br><br><br>';
         //die;
@@ -139,7 +139,7 @@ class TestOneController extends Controller
             [
                 '0',
                 0,
-                'православие',
+                'ОБЩАЯ',
                 'а',
                 'провославие в балтии',
                 'научно-аналитический журнал',
@@ -234,7 +234,7 @@ class TestOneController extends Controller
             $identifier,
             12,
             [
-                'собористый',
+                'согласия',
                 'собора',
                 '',
                 'Оказавшись в столь трудной ',
