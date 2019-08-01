@@ -27,16 +27,15 @@ class Logger implements SplObserverAlias
     /**
      * Receive update from subject
      *
-     * @link https://php.net/manual/en/splobserver.update.php
+     * @see https://php.net/manual/en/splobserver.update.php
      * @param SplSubject $repository
      * @param string|null $event
      * @param null $data
-     * @return void
      * @since 5.1.0
      */
     public function update(SplSubject $repository, string $event = null, $data = null): void
     {
-        $entry = date("Y-m-d H:i:s") . ": '$event' with data '" . json_encode($data) . "'\n";
+        $entry = date('Y-m-d H:i:s') . ": '$event' with data '" . json_encode($data) . "'\n";
         file_put_contents($this->filename, $entry, FILE_APPEND);
 
         echo "Logger: I've written '$event' entry to the log.\n";

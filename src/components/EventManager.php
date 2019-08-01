@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace KonstantinKS\ModuleTestFirst\components;
 
-use KonstantinKS\ModuleTestFirst\models\User;
 use SplObserver;
 use SplSubject as SplSubjectAlias;
 
@@ -36,15 +35,14 @@ class EventManager implements SplSubjectAlias
     /**
      * Attach an SplObserver
      *
-     * @link https://php.net/manual/en/splsubject.attach.php
+     * @see https://php.net/manual/en/splsubject.attach.php
      * @param SplObserver $observer <p>
      * The <b>SplObserver</b> to attach.
      * </p>
      * @param string $event
-     * @return void
      * @since 5.1.0
      */
-    public function attach(SplObserver $observer, string $event = "*"): void
+    public function attach(SplObserver $observer, string $event = '*'): void
     {
         $this->initEventGroup($event);
         $this->observers[$event][] = $observer;
@@ -53,15 +51,14 @@ class EventManager implements SplSubjectAlias
     /**
      * Detach an observer
      *
-     * @link https://php.net/manual/en/splsubject.detach.php
+     * @see https://php.net/manual/en/splsubject.detach.php
      * @param SplObserver $observer <p>
      * The <b>SplObserver</b> to detach.
      * </p>
      * @param string $event
-     * @return void
      * @since 5.1.0
      */
-    public function detach(SplObserver $observer, string $event = "*"): void
+    public function detach(SplObserver $observer, string $event = '*'): void
     {
         foreach ($this->getEventObservers($event) as $key => $s) {
             if ($s === $observer) {
@@ -73,13 +70,12 @@ class EventManager implements SplSubjectAlias
     /**
      * Notify an observer
      *
-     * @link https://php.net/manual/en/splsubject.notify.php
+     * @see https://php.net/manual/en/splsubject.notify.php
      * @param string $event
      * @param null $data
-     * @return void
      * @since 5.1.0
      */
-    public function notify(string $event = "*", $data = null): void
+    public function notify(string $event = '*', $data = null): void
     {
         echo "UserRepository: Broadcasting the '$event' event.\n";
         foreach ($this->getEventObservers($event) as $observer) {
@@ -87,18 +83,18 @@ class EventManager implements SplSubjectAlias
         }
     }
 
-    private function initEventGroup(string $event = "*"): void
+    private function initEventGroup(string $event = '*'): void
     {
         if (!isset($this->observers[$event])) {
             $this->observers[$event] = [];
         }
     }
 
-    private function getEventObservers(string $event = "*"): array
+    private function getEventObservers(string $event = '*'): array
     {
         $this->initEventGroup($event);
         $group = $this->observers[$event];
-        $all = $this->observers["*"];
+        $all = $this->observers['*'];
 
         return array_merge($group, $all);
     }

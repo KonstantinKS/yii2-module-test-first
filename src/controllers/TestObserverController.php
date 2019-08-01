@@ -18,15 +18,15 @@ class TestObserverController extends Controller
 {
     public $layout = 'observer';
 
-    public function actionIndex()
+    public function actionIndex(): void
     {
-        $repository = new UserRepository;
-        $repository->events->attach(new Logger(__DIR__ . "/../../files/log.txt"), "*");
-        $repository->events->attach(new OnboardingNotification("1@example.com"), "users:created");
-        $repository->initialize(__DIR__ . "/../../files/users.csv");
+        $repository = new UserRepository();
+        $repository->events->attach(new Logger(__DIR__ . '/../../files/log.txt'), '*');
+        $repository->events->attach(new OnboardingNotification('1@example.com'), 'users:created');
+        $repository->initialize(__DIR__ . '/../../files/users.csv');
         $user = $repository->createUser([
-            "name" => "John Smith",
-            "email" => "john99@example.com",
+            'name' => 'John Smith',
+            'email' => 'john99@example.com',
         ]);
         //$repository->deleteUser($user);
         print_r($repository);

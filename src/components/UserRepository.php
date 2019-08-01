@@ -16,7 +16,7 @@ use KonstantinKS\ModuleTestFirst\models\User;
 class UserRepository
 {
     /**
-     * @var array Список пользователей.
+     * @var array Список пользователей
      */
     private $users = [];
 
@@ -42,21 +42,21 @@ class UserRepository
     {
         echo "UserRepository: Loading user records from a file.\n";
         // ...
-        $this->events->notify("users:init", $filename);
+        $this->events->notify('users:init', $filename);
     }
 
     public function createUser(array $data): User
     {
         echo "UserRepository: Creating a user.\n";
 
-        $user = new User;
+        $user = new User();
         $user->update($data);
 
         $id = bin2hex(openssl_random_pseudo_bytes(16));
-        $user->update(["id" => $id]);
+        $user->update(['id' => $id]);
         $this->users[$id] = $user;
 
-        $this->events->notify("users:created", $user);
+        $this->events->notify('users:created', $user);
 
         return $user;
     }
@@ -65,7 +65,7 @@ class UserRepository
     {
         echo "UserRepository: Updating a user.\n";
 
-        $id = $user->attributes["id"];
+        $id = $user->attributes['id'];
         if (!isset($this->users[$id])) {
             return null;
         }
@@ -73,7 +73,7 @@ class UserRepository
         $user = $this->users[$id];
         $user->update($data);
 
-        $this->events->notify("users:updated", $user);
+        $this->events->notify('users:updated', $user);
 
         return $user;
     }
@@ -82,13 +82,13 @@ class UserRepository
     {
         echo "UserRepository: Deleting a user.\n";
 
-        $id = $user->attributes["id"];
+        $id = $user->attributes['id'];
         if (!isset($this->users[$id])) {
             return;
         }
 
         unset($this->users[$id]);
 
-        $this->events->notify("users:deleted", $user);
+        $this->events->notify('users:deleted', $user);
     }
 }
