@@ -48,13 +48,13 @@ class TestOneController extends Controller
 
         //$identifier = new Identifier('rsl01000003450');
 
-        $identifier = new Identifier('rsl01008702045');
+        //$identifier = new Identifier('rsl01008702045');
 
-        $identifier = new Identifier('rsl01009480455');
+        //$identifier = new Identifier('rsl01009480455');
 
         //$identifier = new Identifier('rsl01009480450');
 
-        $identifier = new Identifier('rsl01008704417');
+        $identifier = new Identifier('rsl01005175418');
 
         $httpService = new HttpService(
             Yii::$app->params['render']['renderAddress'],
@@ -77,31 +77,31 @@ class TestOneController extends Controller
         echo '<br><br<br><hr><br><br><br>';
         //die;
 
-        $resourcesTypeSize = $render->getResourceApi()->resourcesTypeSize($identifier, 'txt');
-        print_r($resourcesTypeSize);
-        echo '<br><br<br><hr><br><br><br>';
+        //$resourcesTypeSize = $render->getResourceApi()->resourcesTypeSize($identifier, 'txt');
+        //print_r($resourcesTypeSize);
+        //echo '<br><br<br><hr><br><br><br>';
         //die;
 
-        $resourcesType = $render->getResourceApi()->resourcesType($identifier, 'txt');
-        print_r($resourcesType);
-        echo '<br><br<br><hr><br><br><br>';
+        //$resourcesType = $render->getResourceApi()->resourcesType($identifier, 'txt');
+        //print_r($resourcesType);
+        //echo '<br><br<br><hr><br><br><br>';
         //die;
 
-        $documentCard = $render->getContentApi()->documentCard($identifier);
-        print_r($documentCard);
-        echo '<br><br<br><hr><br><br><br>';
+        //$documentCard = $render->getContentApi()->documentCard($identifier);
+        //print_r($documentCard);
+        //echo '<br><br<br><hr><br><br><br>';
         //die;
 
-        $documentMarc = $render->getContentApi()->documentMarc($identifier, '245', 'c');
-        print_r($documentMarc);
-        echo '<br><br<br><hr><br><br><br>';
+        //$documentMarc = $render->getContentApi()->documentMarc($identifier, '245', 'c');
+        //print_r($documentMarc);
+        //echo '<br><br<br><hr><br><br><br>';
         //die;
 
         $documentCoverWidthHeight = $render->getContentApi()->documentCoverWidthHeight($identifier, 1000, 1000);
         $documentCoverWidthHeightBase64 = base64_encode($documentCoverWidthHeight);
         echo "<img src='data:image/jpeg;base64,{$documentCoverWidthHeightBase64}' />";
         echo '<br><br<br><hr><br><br><br>';
-        //die;
+        die;
 
         $documentCoverSize = $render->getContentApi()->documentCoverSize($identifier, 1000);
         $documentCoverSizeBase64 = base64_encode($documentCoverSize);
