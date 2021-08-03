@@ -38,13 +38,13 @@ final class RslDocumentController extends Controller
 
         $httpService = new HttpService();
 
-        $apiCredentials = ApiCredentials::create(
+        $apiCredentialsMin = ApiCredentials::create(
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessHeaderName'],
-            Yii::$app->params['render']['accessKey']
+            Yii::$app->params['render']['accessKey'],
         );
 
-        $apiCredentialsAdditionalData = ApiCredentials::create(
+        $apiCredentialsMiddleOne = ApiCredentials::create(
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessHeaderName'],
             Yii::$app->params['render']['accessKey'],
@@ -56,21 +56,42 @@ final class RslDocumentController extends Controller
             ]
         );
 
+        $apiCredentialsMiddleTwo = ApiCredentials::create(
+            Yii::$app->params['render']['renderAddress'],
+            Yii::$app->params['render']['accessHeaderName'],
+            Yii::$app->params['render']['accessKey'],
+            [],
+            'library-session-id'
+        );
+
+        $apiCredentialsFull = ApiCredentials::create(
+            Yii::$app->params['render']['renderAddress'],
+            Yii::$app->params['render']['accessHeaderName'],
+            Yii::$app->params['render']['accessKey'],
+            [
+                'param1' => 'paramOne',
+                'param2' => 'paramTwo',
+                '=&&%%%///' => 'paramThree',
+                123 => 'paramFour',
+            ],
+            'library-session-id'
+        );
+
         $resourceTypeFactory = new ResourceTypeFactory();
 
-        $resourcesService = new DocumentResourcesService($httpService, $apiCredentials, $resourceTypeFactory);
+        $resourcesService = new DocumentResourcesService($httpService, $apiCredentialsFull, $resourceTypeFactory);
 
-        $contentService = new DocumentContentService($httpService, $apiCredentials);
+        $contentService = new DocumentContentService($httpService, $apiCredentialsFull);
 
-        $renderNewApi = new Api($resourcesService, $contentService);
+        $renderStandard = new Api($resourcesService, $contentService);
 
-        $renderInit = Api::init(
+        $renderMin = Api::init(
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessKey'],
             Yii::$app->params['render']['accessHeaderName']
         );
 
-        $renderInitAdditionalData = Api::init(
+        $renderMiddleOne = Api::init(
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessKey'],
             Yii::$app->params['render']['accessHeaderName'],
@@ -82,28 +103,53 @@ final class RslDocumentController extends Controller
             ]
         );
 
+        $renderMiddleTwo = Api::init(
+            Yii::$app->params['render']['renderAddress'],
+            Yii::$app->params['render']['accessKey'],
+            Yii::$app->params['render']['accessHeaderName'],
+            [],
+            'library-session-id'
+        );
+
+        $renderFull = Api::init(
+            Yii::$app->params['render']['renderAddress'],
+            Yii::$app->params['render']['accessKey'],
+            Yii::$app->params['render']['accessHeaderName'],
+            [
+                'param1' => 'paramOne',
+                'param2' => 'paramTwo',
+                '=&&%%%///' => 'paramThree',
+                123 => 'paramFour',
+            ],
+            'library-session-id'
+        );
+
+        $render = $renderFull;
+
         ////////////////////////////////////////////////////////////////////////////////////////////
         $identifier = 'rsl01002054608';
+
         if (!RslDocumentIdentifier::match($identifier)) {
             throw new Exception('Некорректный формат идентификатора.');
         }
+
         $identifierEntity = new RslDocumentIdentifier($identifier);
 
         echo '<pre>';
         print_r($identifier);
 
-        $resources = $renderInitAdditionalData->getResourceApi()->resources($identifierEntity);
+        $resources = $render->getResourceApi()->resources($identifierEntity);
         print_r($resources);
         echo '<br><br<br><hr><br><br><br>';
 
-        $resourcesTypeSize = $renderInitAdditionalData->getResourceApi()->resourcesTypeSize(
+        $resourcesTypeSize = $render->getResourceApi()->resourcesTypeSize(
             $identifierEntity,
             new UnknownResourceType('meta')
         );
         print_r($resourcesTypeSize);
         echo '<br><br<br><hr><br><br><br>';
 
-        $resourcesType = $render->getResourceApi()->resourcesType($identifierEntity, 'meta');
+        $resourcesType = $render->getResourceApi()->resourcesType($identifierEntity, new UnknownResourceType('meta'));
         print_r($resourcesType);
         echo '<br><br<br><hr><br><br><br>';
 
