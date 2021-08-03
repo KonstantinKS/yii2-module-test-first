@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace KonstantinKS\ModuleTestFirst\controllers;
 
+use Demliz\DocumentIdentifier\Identifier\NebDocumentIdentifier;
+use Demliz\DocumentIdentifier\Identifier\RslDocumentIdentifier;
+use Demliz\RenderRsl\Access\ApiCredentials;
 use Demliz\RenderRsl\Api;
-use Demliz\RenderRsl\NebDocumentIdentifier;
-use Demliz\RenderRsl\RslDocumentIdentifier;
+use Demliz\RenderRsl\Domain\ResourceType\UnknownResourceType;
+use Demliz\RenderRsl\Factory\ResourceTypeFactory;
 use Demliz\RenderRsl\Service\DocumentContentService;
 use Demliz\RenderRsl\Service\DocumentResourcesService;
 use Demliz\RenderRsl\Service\HttpService;
@@ -34,98 +37,146 @@ final class NebDocumentController extends Controller
     {
         TestOneAssetsBundle::register($this->view);
 
-        $httpService = new HttpService(
-            Yii::$app->params['render']['renderAddress'],
-            Yii::$app->params['render']['accessKey']
+        $httpService = new HttpService();
+
+        $apiCredentialsMin = ApiCredentials::create(
+            Yii::$app->params['render']['renderAddressNebRus'],
+            Yii::$app->params['render']['accessHeaderNameNebRus'],
+            Yii::$app->params['render']['accessKeyNebRus']
         );
 
-        $resourcesService = new DocumentResourcesService($httpService);
-
-        $contentService = new DocumentContentService($httpService);
-
-        //$render = new Api($resourcesService, $contentService);
-
-        $render = Api::init(
-            Yii::$app->params['render']['renderAddress'],
-            Yii::$app->params['render']['accessKey']
+        $apiCredentialsMiddleOne = ApiCredentials::create(
+            Yii::$app->params['render']['renderAddressNebRus'],
+            Yii::$app->params['render']['accessHeaderNameNebRus'],
+            Yii::$app->params['render']['accessKeyNebRus'],
+            ['getParamOne' => 'valueOne', 'getParamTwo' => 'valueTwo']
         );
 
+        $apiCredentialsMiddleTwo = ApiCredentials::create(
+            Yii::$app->params['render']['renderAddressNebRus'],
+            Yii::$app->params['render']['accessHeaderNameNebRus'],
+            Yii::$app->params['render']['accessKeyNebRus'],
+            [],
+            'library-session_id'
+        );
 
-        //$identifier = new Identifier('rsl01009950491');
+        $apiCredentialsFull = ApiCredentials::create(
+            Yii::$app->params['render']['renderAddressNebRus'],
+            Yii::$app->params['render']['accessHeaderNameNebRus'],
+            Yii::$app->params['render']['accessKeyNebRus'],
+            ['getParamOne' => 'valueOne', 'getParamTwo' => 'valueTwo'],
+            'library-session_id'
+        );
 
-        //$identifier = new Identifier('rsl01009950495');
+        $resourceTypeFactory = new ResourceTypeFactory();
 
-        //$identifier = new Identifier('rsl03111111111');
+        $resourcesService = new DocumentResourcesService($httpService, $apiCredentialsFull, $resourceTypeFactory);
 
-        //$identifier = new Identifier('rsl01000003450');
+        $contentService = new DocumentContentService($httpService, $apiCredentialsFull);
 
-        //$identifier = new Identifier('rsl01008702045');
+        $renderStandard = new Api($resourcesService, $contentService);
 
-        //$identifier = new Identifier('rsl01009480455');
+        $renderMin = Api::init(
+            Yii::$app->params['render']['renderAddressNebRus'],
+            Yii::$app->params['render']['accessKeyNebRus'],
+            Yii::$app->params['render']['accessHeaderNameNebRus']
+        );
 
-        //$identifier = new Identifier('rsl01009480450');
+        $renderMiddleOne = Api::init(
+            Yii::$app->params['render']['renderAddressNebRus'],
+            Yii::$app->params['render']['accessKeyNebRus'],
+            Yii::$app->params['render']['accessHeaderNameNebRus'],
+            ['getParamOne' => 'valueOne', 'getParamTwo' => 'valueTwo']
+        );
+
+        $renderMiddleTwo = Api::init(
+            Yii::$app->params['render']['renderAddressNebRus'],
+            Yii::$app->params['render']['accessKeyNebRus'],
+            Yii::$app->params['render']['accessHeaderNameNebRus'],
+            [],
+            'library-session_id'
+        );
+
+        $renderFull = Api::init(
+            Yii::$app->params['render']['renderAddressNebRus'],
+            Yii::$app->params['render']['accessKeyNebRus'],
+            Yii::$app->params['render']['accessHeaderNameNebRus'],
+            ['getParamOne' => 'valueOne', 'getParamTwo' => 'valueTwo'],
+            'library-session_id'
+        );
+
+        $render = $renderFull;
 
         ////////////////////////////////////////////////////////////////////////////////////////////
-        $identifier = new NebDocumentIdentifier('000207_000017_RU_RGDB_BIBL_0000354719');
-        echo '<pre>';
-        print_r($identifier);
+        $identifier = '000199_000009_000616226';
 
-        $resources = $render->getResourceApi()->resources($identifier);
+        if (!NebDocumentIdentifier::match($identifier)) {
+            throw new Exception('Некорректный формат идентификатора.');
+        }
+
+        $identifierEntity = new NebDocumentIdentifier($identifier);
+
+        echo '<pre>';
+        print_r($identifierEntity);
+
+        $resources = $render->getResourceApi()->resources($identifierEntity);
         print_r($resources);
         echo '<br><br<br><hr><br><br><br>';
 
-        $resourcesTypeSize = $render->getResourceApi()->resourcesTypeSize($identifier, 'meta');
+        $resourcesTypeSize = $render
+            ->getResourceApi()
+            ->resourcesTypeSize($identifierEntity, new UnknownResourceType('meta'));
         print_r($resourcesTypeSize);
         echo '<br><br<br><hr><br><br><br>';
 
-        $resourcesType = $render->getResourceApi()->resourcesType($identifier, 'meta');
+        $resourcesType = $render->getResourceApi()->resourcesType($identifierEntity, new UnknownResourceType('meta'));
         print_r($resourcesType);
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentCard = $render->getContentApi()->documentCard($identifier);
+        $documentCard = $render->getContentApi()->documentCard($identifierEntity);
         print_r($documentCard);
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentMarc = $render->getContentApi()->documentMarc($identifier, '245', 'c');
+        $documentMarc = $render->getContentApi()->documentMarc($identifierEntity, '245', 'c');
         print_r($documentMarc);
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentCoverWidthHeight = $render->getContentApi()->documentCoverWidthHeight($identifier, 100, 100);
+        $documentCoverWidthHeight = $render->getContentApi()->documentCoverWidthHeight($identifierEntity, 100, 100);
         $documentCoverWidthHeightBase64 = base64_encode($documentCoverWidthHeight);
         echo "<img src='data:image/jpeg;base64,{$documentCoverWidthHeightBase64}' />";
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentCoverSize = $render->getContentApi()->documentCoverSize($identifier, 1000);
+        $documentCoverSize = $render->getContentApi()->documentCoverSize($identifierEntity, 1000);
         $documentCoverSizeBase64 = base64_encode($documentCoverSize);
         echo "<img src='data:image/jpeg;base64,{$documentCoverSizeBase64}' />";
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentInfo = $render->getContentApi()->documentInfo($identifier);
+        $documentInfo = $render->getContentApi()->documentInfo($identifierEntity);
         print_r($documentInfo);
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentType = $render->getContentApi()->documentType($identifier);
+        $documentType = $render->getContentApi()->documentType($identifierEntity);
         print_r($documentType);
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentAccess = $render->getContentApi()->documentAccess($identifier);
+        $documentAccess = $render->getContentApi()->documentAccess($identifierEntity);
         print_r($documentAccess);
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentCollections = $render->getContentApi()->documentCollections($identifier);
+        $documentCollections = $render->getContentApi()->documentCollections($identifierEntity);
         print_r($documentCollections);
         echo '<br><br<br><hr><br><br><br>';
 
-        $pagesCount = $render->getContentApi()->pagesCount($identifier);
+        $pagesCount = $render->getContentApi()->pagesCount($identifierEntity);
         print_r($pagesCount);
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentPagesGeometry = $render->getContentApi()->documentPagesGeometry($identifier, 11);
+        $documentPagesGeometry = $render->getContentApi()->documentPagesGeometry($identifierEntity, 11);
         print_r($documentPagesGeometry);
         echo '<br><br<br><hr><br><br><br>';
 
         $documentPages = $render->getContentApi()->documentPages(
-            $identifier,
+            $identifierEntity,
             11,
             'images',
             100,
@@ -138,7 +189,7 @@ final class NebDocumentController extends Controller
         echo '<br><br<br><hr><br><br><br>';
 
         $documentPagesWidthHeight = $render->getContentApi()->documentPagesWidthHeight(
-            $identifier,
+            $identifierEntity,
             12,
             'images',
             'width',
@@ -151,12 +202,12 @@ final class NebDocumentController extends Controller
         echo "<img src='data:image/tiff;base64,{$documentPagesWidthHeightBase64}' />";
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentPagesWordList = $render->getContentApi()->documentPagesWordList($identifier, 11);
+        $documentPagesWordList = $render->getContentApi()->documentPagesWordList($identifierEntity, 11);
         print_r($documentPagesWordList);
         echo '<br><br<br><hr><br><br><br>';
 
         $documentPagesSearch = $render->getContentApi()->documentPagesSearch(
-            $identifier,
+            $identifierEntity,
             12,
             [
                 '12',
@@ -180,7 +231,7 @@ final class NebDocumentController extends Controller
             }
         }
         $documentPagesWidthHeight = $render->getContentApi()->documentPagesWidthHeight(
-            $identifier,
+            $identifierEntity,
             12,
             'images',
             'width',
@@ -194,7 +245,7 @@ final class NebDocumentController extends Controller
         echo '<br><br<br><hr><br><br><br>';
 
         $documentPagesSearchRender = $render->getContentApi()->documentPagesSearchRender(
-            $identifier,
+            $identifierEntity,
             12,
             [
                 'берегов',
@@ -214,14 +265,14 @@ final class NebDocumentController extends Controller
         echo "<img src='data:image/tiff;base64,{$documentPagesSearchRenderBase64}' />";
         echo '<br><br<br><hr><br><br><br>';
 
-        $documentPageSet = $render->getContentApi()->documentPageSet($identifier, [5, '4', '9-12', 112]);
+        $documentPageSet = $render->getContentApi()->documentPageSet($identifierEntity, [5, '4', '9-12', 112]);
         file_put_contents(__DIR__ . '/../../files/' . time() . '.tiff', $documentPageSet);
         $documentPageSetBase64 = base64_encode($documentPageSet);
         echo "<img src='data:image/tiff;base64,{$documentPageSetBase64}' />";
         echo '<br><br<br><hr><br><br><br>';
 
 //        return $this->render('render-static', [
-//            'identifier' => $identifier ?? false,
+//            'identifier' => $identifierEntity ?? false,
 //            'render' => $render ?? false,
 //            'pagesCount' => $pagesCount ?? false,
 //            'resources' => $resources ?? false,
