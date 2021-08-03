@@ -21,6 +21,9 @@
         "yiisoft/yii2": "~2.0.0",
         "demliz/render-api-wrapper": "^1.1.0"
     },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
     "extra": {
         "bootstrap": "KonstantinKS\\ModuleTestFirst\\Bootstrap"
     },
