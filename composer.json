@@ -19,7 +19,8 @@
     "require": {
         "php": ">=7.1.0",
         "yiisoft/yii2": "~2.0.0",
-        "demliz/render-api-wrapper": "^1.1.0"
+        "demliz/render-api-wrapper": "^1.1.0",
+        "demliz/document-identifier": "^1.2.3"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"
