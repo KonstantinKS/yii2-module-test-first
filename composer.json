@@ -19,6 +19,7 @@
     "require": {
         "php": ">=7.1.0",
         "yiisoft/yii2": "~2.0.0",
+        "demliz/render-api-wrapper": "^1.1.0"
     },
     "extra": {
         "bootstrap": "KonstantinKS\\ModuleTestFirst\\Bootstrap"
