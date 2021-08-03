@@ -17,11 +17,18 @@ use KonstantinKS\ModuleTestFirst\TestOneAssetsBundle;
 use Yii;
 use yii\web\Controller;
 
-class RslDocumentController extends Controller
+/**
+ * Проверка работы demliz-org/render-api-wrapper с документом из РГБ
+ *
+ * @author Konstantin Karpov <k-karpov@inbox.ru>
+ */
+final class RslDocumentController extends Controller
 {
     //public $layout = 'main';
 
     /**
+     * Проверка работы demliz-org/render-api-wrapper с документом из РГБ
+     *
      * @return string
      * @throws Exception
      */
@@ -83,6 +90,7 @@ class RslDocumentController extends Controller
         $identifierEntity = new RslDocumentIdentifier($identifier);
 
         echo '<pre>';
+        print_r($identifier);
 
         $resources = $renderInitAdditionalData->getResourceApi()->resources($identifierEntity);
         print_r($resources);
@@ -269,7 +277,6 @@ class RslDocumentController extends Controller
         $documentType = $render->getContentApi()->documentType($identifier);
         print_r($documentType);
         echo '<br><br<br><hr><br><br><br>';
-        //die;
 
         $documentAccess = $render->getContentApi()->documentAccess($identifier);
         print_r($documentAccess);
@@ -400,13 +407,15 @@ class RslDocumentController extends Controller
         echo "<img src='data:image/tiff;base64,{$documentPageSetBase64}' />";
         echo '<br><br<br><hr><br><br><br>';
 
-        return $this->render('render-static', [
-            'identifier' => $identifier ?? false,
-            'render' => $render ?? false,
-            'pagesCount' => $pagesCount ?? false,
-            'resources' => $resources ?? false,
-            'documentCard' => $documentCard ?? false,
-            'image' => $image ?? false,
-        ]);
+        die;
+
+//        return $this->render('render-static', [
+//            'identifier' => $identifier ?? false,
+//            'render' => $render ?? false,
+//            'pagesCount' => $pagesCount ?? false,
+//            'resources' => $resources ?? false,
+//            'documentCard' => $documentCard ?? false,
+//            'image' => $image ?? false,
+//        ]);
     }
 }
