@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace KonstantinKS\ModuleTestFirst\controllers;
 
 use Demliz\DocumentIdentifier\Identifier\NebDocumentIdentifier;
-use Demliz\DocumentIdentifier\Identifier\RslDocumentIdentifier;
 use Demliz\RenderRsl\Access\ApiCredentials;
 use Demliz\RenderRsl\Api;
+use Demliz\RenderRsl\Domain\GetParameter;
+use Demliz\RenderRsl\Domain\GetParameterBag;
 use Demliz\RenderRsl\Domain\ResourceType\UnknownResourceType;
 use Demliz\RenderRsl\Factory\ResourceTypeFactory;
 use Demliz\RenderRsl\Service\DocumentContentService;
@@ -49,14 +50,19 @@ final class NebDocumentController extends Controller
             Yii::$app->params['render']['renderAddressNebRus'],
             Yii::$app->params['render']['accessHeaderNameNebRus'],
             Yii::$app->params['render']['accessKeyNebRus'],
-            ['getParamOne' => 'valueOne', 'getParamTwo' => 'valueTwo']
+            new GetParameterBag(
+                new GetParameter('param1', 'paramOne'),
+                new GetParameter('param2', 'paramTwo'),
+                new GetParameter('=&&%%%///', 'paramThree'),
+                new GetParameter('123' , 'paramFour')
+            )
         );
 
         $apiCredentialsMiddleTwo = ApiCredentials::create(
             Yii::$app->params['render']['renderAddressNebRus'],
             Yii::$app->params['render']['accessHeaderNameNebRus'],
             Yii::$app->params['render']['accessKeyNebRus'],
-            [],
+            null,
             'library-session_id'
         );
 
@@ -64,7 +70,12 @@ final class NebDocumentController extends Controller
             Yii::$app->params['render']['renderAddressNebRus'],
             Yii::$app->params['render']['accessHeaderNameNebRus'],
             Yii::$app->params['render']['accessKeyNebRus'],
-            ['getParamOne' => 'valueOne', 'getParamTwo' => 'valueTwo'],
+            new GetParameterBag(
+                new GetParameter('param1', 'paramOne'),
+                new GetParameter('param2', 'paramTwo'),
+                new GetParameter('=&&%%%///', 'paramThree'),
+                new GetParameter('123' , 'paramFour')
+            ),
             'library-session_id'
         );
 
@@ -86,14 +97,19 @@ final class NebDocumentController extends Controller
             Yii::$app->params['render']['renderAddressNebRus'],
             Yii::$app->params['render']['accessKeyNebRus'],
             Yii::$app->params['render']['accessHeaderNameNebRus'],
-            ['getParamOne' => 'valueOne', 'getParamTwo' => 'valueTwo']
+            new GetParameterBag(
+                new GetParameter('param1', 'paramOne'),
+                new GetParameter('param2', 'paramTwo'),
+                new GetParameter('=&&%%%///', 'paramThree'),
+                new GetParameter('123' , 'paramFour')
+            )
         );
 
         $renderMiddleTwo = Api::init(
             Yii::$app->params['render']['renderAddressNebRus'],
             Yii::$app->params['render']['accessKeyNebRus'],
             Yii::$app->params['render']['accessHeaderNameNebRus'],
-            [],
+            null,
             'library-session_id'
         );
 
@@ -101,7 +117,12 @@ final class NebDocumentController extends Controller
             Yii::$app->params['render']['renderAddressNebRus'],
             Yii::$app->params['render']['accessKeyNebRus'],
             Yii::$app->params['render']['accessHeaderNameNebRus'],
-            ['getParamOne' => 'valueOne', 'getParamTwo' => 'valueTwo'],
+            new GetParameterBag(
+                new GetParameter('param1', 'paramOne'),
+                new GetParameter('param2', 'paramTwo'),
+                new GetParameter('=&&%%%///', 'paramThree'),
+                new GetParameter('123' , 'paramFour')
+            ),
             'library-session_id'
         );
 

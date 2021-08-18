@@ -7,6 +7,8 @@ namespace KonstantinKS\ModuleTestFirst\controllers;
 use Demliz\DocumentIdentifier\Identifier\RslDocumentIdentifier;
 use Demliz\RenderRsl\Access\ApiCredentials;
 use Demliz\RenderRsl\Api;
+use Demliz\RenderRsl\Domain\GetParameter;
+use Demliz\RenderRsl\Domain\GetParameterBag;
 use Demliz\RenderRsl\Domain\ResourceType\UnknownResourceType;
 use Demliz\RenderRsl\Factory\ResourceTypeFactory;
 use Demliz\RenderRsl\Service\DocumentContentService;
@@ -48,19 +50,19 @@ final class RslDocumentController extends Controller
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessHeaderName'],
             Yii::$app->params['render']['accessKey'],
-            [
-                'param1' => 'paramOne',
-                'param2' => 'paramTwo',
-                '=&&%%%///' => 'paramThree',
-                123 => 'paramFour',
-            ]
+            new GetParameterBag(
+                new GetParameter('param1', 'paramOne'),
+                new GetParameter('param2', 'paramTwo'),
+                new GetParameter('=&&%%%///', 'paramThree'),
+                new GetParameter('123' , 'paramFour')
+            )
         );
 
         $apiCredentialsMiddleTwo = ApiCredentials::create(
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessHeaderName'],
             Yii::$app->params['render']['accessKey'],
-            [],
+            null,
             'library-session-id'
         );
 
@@ -68,12 +70,12 @@ final class RslDocumentController extends Controller
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessHeaderName'],
             Yii::$app->params['render']['accessKey'],
-            [
-                'param1' => 'paramOne',
-                'param2' => 'paramTwo',
-                '=&&%%%///' => 'paramThree',
-                123 => 'paramFour',
-            ],
+            new GetParameterBag(
+                new GetParameter('param1', 'paramOne'),
+                new GetParameter('param2', 'paramTwo'),
+                new GetParameter('=&&%%%///', 'paramThree'),
+                new GetParameter('123' , 'paramFour')
+            ),
             'library-session-id'
         );
 
@@ -95,19 +97,19 @@ final class RslDocumentController extends Controller
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessKey'],
             Yii::$app->params['render']['accessHeaderName'],
-            [
-                'param1' => 'paramOne',
-                'param2' => 'paramTwo',
-                '=&&%%%///' => 'paramThree',
-                123 => 'paramFour',
-            ]
+            new GetParameterBag(
+                new GetParameter('param1', 'paramOne'),
+                new GetParameter('param2', 'paramTwo'),
+                new GetParameter('=&&%%%///', 'paramThree'),
+                new GetParameter('123' , 'paramFour')
+            )
         );
 
         $renderMiddleTwo = Api::init(
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessKey'],
             Yii::$app->params['render']['accessHeaderName'],
-            [],
+            null,
             'library-session-id'
         );
 
@@ -115,12 +117,13 @@ final class RslDocumentController extends Controller
             Yii::$app->params['render']['renderAddress'],
             Yii::$app->params['render']['accessKey'],
             Yii::$app->params['render']['accessHeaderName'],
-            [
-                'param1' => 'paramOne',
-                'param2' => 'paramTwo',
-                '=&&%%%///' => 'paramThree',
-                123 => 'paramFour',
-            ],
+            new GetParameterBag(
+                new GetParameter('param1', 'paramOne'),
+                new GetParameter('param2', 'paramTwo'),
+                new GetParameter('param3', 'paramThree'),
+                new GetParameter('=&&%%%///', 'paramX'),
+                new GetParameter('123' , 'paramFour')
+            ),
             'library-session-id'
         );
 
