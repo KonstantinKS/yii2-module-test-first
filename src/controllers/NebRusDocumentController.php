@@ -9,8 +9,6 @@ use Demliz\RenderRsl\Api;
 use Demliz\DocumentIdentifier\Identifier\NebDocumentIdentifier;
 use Demliz\DocumentIdentifier\Identifier\RslDocumentIdentifier;
 use Demliz\RenderRsl\Domain\ResourceType\EpubResourceType;
-use Demliz\RenderRsl\Domain\ResourceType\PdfResourceType;
-use Demliz\RenderRsl\Domain\ResourceType\UnknownResourceType;
 use Demliz\RenderRsl\Factory\ResourceTypeFactory;
 use Demliz\RenderRsl\Service\DocumentContentService;
 use Demliz\RenderRsl\Service\DocumentResourcesService;

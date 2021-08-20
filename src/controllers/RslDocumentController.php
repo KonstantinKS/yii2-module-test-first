@@ -54,7 +54,7 @@ final class RslDocumentController extends Controller
                 new GetParameter('param1', 'paramOne'),
                 new GetParameter('param2', 'paramTwo'),
                 new GetParameter('=&&%%%///', 'paramThree'),
-                new GetParameter('123' , 'paramFour')
+                new GetParameter('123', 'paramFour')
             )
         );
 
@@ -74,7 +74,7 @@ final class RslDocumentController extends Controller
                 new GetParameter('param1', 'paramOne'),
                 new GetParameter('param2', 'paramTwo'),
                 new GetParameter('=&&%%%///', 'paramThree'),
-                new GetParameter('123' , 'paramFour')
+                new GetParameter('123', 'paramFour')
             ),
             'library-session-id'
         );
@@ -101,7 +101,7 @@ final class RslDocumentController extends Controller
                 new GetParameter('param1', 'paramOne'),
                 new GetParameter('param2', 'paramTwo'),
                 new GetParameter('=&&%%%///', 'paramThree'),
-                new GetParameter('123' , 'paramFour')
+                new GetParameter('123', 'paramFour')
             )
         );
 
@@ -122,7 +122,7 @@ final class RslDocumentController extends Controller
                 new GetParameter('param2', 'paramTwo'),
                 new GetParameter('param3', 'paramThree'),
                 new GetParameter('=&&%%%///', 'paramX'),
-                new GetParameter('123' , 'paramFour')
+                new GetParameter('123', 'paramFour')
             ),
             'library-session-id'
         );
